@@ -1,5 +1,6 @@
 import React from "react";
 import validator from "validator";
+import "../styleSheets/LoginWindow.css";
 
 class LoginWindow extends React.Component {
     constructor(props) {
@@ -9,7 +10,8 @@ class LoginWindow extends React.Component {
             password: "",
             isValidPw: false,
             isValidName: false,
-            sessionToken: ""
+            sessionToken: "",
+            loggedIn: false
         };
     }
 
@@ -40,7 +42,6 @@ class LoginWindow extends React.Component {
     handleSubmit = props => {
         if (this.state.isValidName === true) {
             if (this.state.isValidPw === true) {
-                alert("valid");
                 this.props.handleLoggedIn(true);
                 //request session id
             } else {
@@ -54,19 +55,21 @@ class LoginWindow extends React.Component {
     render() {
         return (
             <div>
-                <form name="LoginForm" onSubmit={this.handleSubmit}>
-                    <div>Login name:</div>
-                    <input
-                        type="email"
-                        onChange={this.handleNameChange}
-                        autoFocus={true}
-                    />
-                    <br />
-                    <div>Password:</div>
-                    <input type="password" onChange={this.handlePwChange} />
-                    <br />
-                    <input type="submit" value="Submit" />
-                    {/* <input type="range" min=  "0" max="10" step="1"/> */}
+                <form name='LoginForm' onSubmit={this.handleSubmit}>
+                    <div className='login_form'>
+                        <div>Login name:</div>
+                        <input
+                            type='email'
+                            onChange={this.handleNameChange}
+                            autoFocus={true}
+                        />
+                        <br />
+                        <div>Password:</div>
+                        <input type='password' onChange={this.handlePwChange} />
+                        <br />
+                        <input type='submit' value='Submit' />
+                        {/* <input type="range" min=  "0" max="10" step="1"/> */}
+                    </div>
                 </form>
             </div>
         );

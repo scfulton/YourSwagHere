@@ -3,10 +3,14 @@
     justify-content: center;
     align-items: center;
     min-height: 50vh;
-    background: rgba(143, 48, 13, 0.938);
+    background: rgba(236, 115, 70, 0.938);
     color: whitesmoke;
 }
 
 .main_background {
     background-image: url("bgImage.jpeg");
+}
+
+.link_text{
+    color: white;
 }
