@@ -1,35 +1,17 @@
-import React from 'react'
+import React from "react";
 
-return (
-    <Router>
-      <div>
-        <nav>
-          <ul className="nav_bar">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
+function NavigationBar() {
+    return (
+        <nav className="nav_bar">
+            <h3>Logo here</h3>
+            <ul className="nav_links">
+                <li>Home</li>
+                <li>Account</li>
+                <li>Shop</li>
+                <li>Sign Out</li>
+            </ul>
         </nav>
+    );
+}
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
+export default NavigationBar;
