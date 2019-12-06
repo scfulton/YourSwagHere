@@ -1,5 +1,5 @@
 import React from "react";
-import LoginWindow from "./LoginWindow";
+// import LoginWindow from "./LoginWindow";
 import Dashboard from "./Dashboard";
 
 import {
@@ -20,22 +20,22 @@ export default function AuthExample() {
 
                 <ul>
                     <li>
-                        <Link to='/public'>Store</Link>
+                        <Link to="/public">Store</Link>
                     </li>
                     <li>
-                        <Link to='/protected'>Dashboard</Link>
+                        <Link to="/protected">Dashboard</Link>
                     </li>
                 </ul>
 
                 <Switch>
-                    <Route path='/public'>
+                    <Route path="/public">
                         <PublicPage />
                     </Route>
-                    <Route path='/login'>
+                    <Route path="/login">
                         {/* <LoginWindow /> */}
                         <LoginPage />
                     </Route>
-                    <PrivateRoute path='/protected'>
+                    <PrivateRoute path="/protected">
                         <Dashboard />
                     </PrivateRoute>
                 </Switch>
@@ -100,9 +100,9 @@ function PublicPage() {
     return <h3>Store Page</h3>;
 }
 
-function ProtectedPage() {
-    return <h3>Dashboard Page</h3>;
-}
+// function ProtectedPage() {
+//     return <h3>Dashboard Page</h3>;
+// }
 
 function LoginPage() {
     let history = useHistory();

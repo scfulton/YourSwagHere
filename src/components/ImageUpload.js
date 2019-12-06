@@ -1,4 +1,5 @@
 import React from "react";
+import atob from "atob";
 import FileBase from "react-file-base64";
 import DefaultImage from "./default-img.jpg";
 
@@ -8,31 +9,19 @@ class ImageUpload extends React.Component {
 
         this.state = {
             imageURL: DefaultImage,
-            files: []
+            files: [],
+            unEncFile: ""
         };
 
         this.handleUploadImage = this.handleUploadImage.bind(this);
     }
 
     getFiles(files) {
-        this.setState({ files: files });
+        this.setState({ files: files, unEncFile: files });
     }
 
     handleUploadImage(ev) {
         ev.preventDefault();
-
-        // const data = new FormData();
-        // data.append("file", this.uploadInput.files[0]);
-        // data.append("filename", this.fileName.value);
-
-        //////////////////////
-        let file = this.state.files;
-        let imageObj = {
-            imageName: this.fileName.value,
-            imageData: file.base64.toString()
-        };
-        /////////////////////////
-
         fetch("http://localhost:3003/image/uploadbase/", {
             method: "POST",
             headers: {
@@ -45,9 +34,13 @@ class ImageUpload extends React.Component {
             })
         }).then(response => {
             response.json().then(body => {
-                this.setState({
-                    imageURL: `http://localhost:3003/${body.file}`
-                });
+                this.setState(
+                    {
+                        // imageURL: atob(this.state.unEncFile)
+                        imageURL: this.state.files.base64.toString("base64")
+                    },
+                    console.log()
+                );
             });
         });
     }
@@ -56,33 +49,24 @@ class ImageUpload extends React.Component {
         return (
             <form onSubmit={this.handleUploadImage}>
                 <div>
-                    {/* <input
-                        ref={ref => {
-                            this.uploadInput = ref;
-                        }}
-                        type='file'
-                    /> */}
-                </div>
-                <div>
                     <FileBase
-                        type='file'
+                        type="file"
                         multiple={false}
-                        // onDone={this.getBaseFile.bind(this)}
                         onDone={this.getFiles.bind(this)}
                     />
                     <input
                         ref={ref => {
                             this.fileName = ref;
                         }}
-                        type='text'
-                        placeholder='Enter Company name'
+                        type="text"
+                        placeholder="Enter Company name"
                     />
                 </div>
                 <br />
                 <div>
                     <button>Upload</button>
                 </div>
-                <img src={this.state.imageURL} alt='img' />
+                <img src={this.state.imageURL} alt="img" />
             </form>
         );
     }

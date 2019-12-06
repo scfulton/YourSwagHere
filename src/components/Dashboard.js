@@ -1,6 +1,6 @@
 import React from "react";
 import ImageUpload from "./ImageUpload";
-import UpLoadWindow from "./UploadWindow";
+// import UpLoadWindow from "./UploadWindow";
 
 function Dashboard() {
     return (
@@ -9,7 +9,6 @@ function Dashboard() {
             <br />
             <br />
             <ImageUpload />
-            {/* <UpLoadWindow /> */}
         </div>
     );
 }

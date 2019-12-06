@@ -49,23 +49,23 @@ class UploadWindow extends React.Component {
     render() {
         return (
             <div>
-                <div className='process'>
-                    <h4 className='process__heading'>Process: Using Base64</h4>
-                    <p className='process__details'>
+                <div className="process">
+                    <h4 className="process__heading">Process: Using Base64</h4>
+                    <p className="process__details">
                         Upload image as Base64 directly to MongoDB database
                     </p>
 
-                    <div className='process__upload-btn'>
+                    <div className="process__upload-btn">
                         <FileBase
-                            type='file'
+                            type="file"
                             multiple={false}
                             onDone={this.getBaseFile.bind(this)}
                         />
                     </div>
                     <img
                         src={this.state.baseImage}
-                        alt='upload-image'
-                        className='process__image'
+                        alt="upload"
+                        className="process__image"
                     />
                 </div>
             </div>
