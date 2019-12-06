@@ -20,17 +20,18 @@ class RenderWindow extends React.Component {
     render() {
         return (
             <Router>
+                <div>Say hello</div>
                 <div>
                     <Nav className='nav_bar' />
                     <Route path='/listwindow' exact Component={ListWindow} />
                     <Route path='/dashboard' exact Component={Dashboard} />
                 </div>
 
-                <switch>
+                <Switch>
                     <Route path='/Dashboard'>
                         <Dashboard />
                     </Route>
-                </switch>
+                </Switch>
             </Router>
         );
     }

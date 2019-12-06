@@ -42,7 +42,7 @@ class LoginWindow extends React.Component {
     handleSubmit = props => {
         if (this.state.isValidName === true) {
             if (this.state.isValidPw === true) {
-                this.props.handleLoggedIn(true);
+                props.handleLoggedIn(true);
                 //request session id
             } else {
                 alert("pw invalid");

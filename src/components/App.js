@@ -1,73 +1,124 @@
 import React from "react";
 import LoginWindow from "./LoginWindow";
-import RenderWindow from "./RenderWindow";
-import Nav from "../components/NavigationBar";
-import "../styleSheets/App.css";
+import Dashboard from "./Dashboard";
+
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Link,
-    Redirect
+    Redirect,
+    useHistory,
+    useLocation
 } from "react-router-dom";
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoggedIn: false,
-            showLink: true,
-            whichMessage: true,
-            showAllNav: false
-        };
-    }
+export default function AuthExample() {
+    return (
+        <Router>
+            <div>
+                <AuthButton />
 
-    handleAllNav = event => {
-        this.setState({ showAllNav: event });
-    };
-    handleLoggedIn = event => {
-        this.setState({ isLoggedIn: event }, () => {
-            return <Route to='/renderWindow' />;
-            // return <RenderWindow />;
+                <ul>
+                    <li>
+                        <Link to='/public'>Store</Link>
+                    </li>
+                    <li>
+                        <Link to='/protected'>Dashboard</Link>
+                    </li>
+                </ul>
+
+                <Switch>
+                    <Route path='/public'>
+                        <PublicPage />
+                    </Route>
+                    <Route path='/login'>
+                        {/* <LoginWindow /> */}
+                        <LoginPage />
+                    </Route>
+                    <PrivateRoute path='/protected'>
+                        <Dashboard />
+                    </PrivateRoute>
+                </Switch>
+            </div>
+        </Router>
+    );
+}
+
+const fakeAuth = {
+    isAuthenticated: false,
+    authenticate(cb) {
+        fakeAuth.isAuthenticated = true;
+        setTimeout(cb, 100); // fake async
+    },
+    signout(cb) {
+        fakeAuth.isAuthenticated = false;
+        setTimeout(cb, 100);
+    }
+};
+
+function AuthButton() {
+    let history = useHistory();
+
+    return fakeAuth.isAuthenticated ? (
+        <p>
+            Welcome!{" "}
+            <button
+                onClick={() => {
+                    fakeAuth.signout(() => history.push("/"));
+                }}>
+                Sign out
+            </button>
+        </p>
+    ) : (
+        <p>You are not logged in.</p>
+    );
+}
+
+// A wrapper for <Route> that redirects to the login
+// screen if you're not yet authenticated.
+function PrivateRoute({ children, ...rest }) {
+    return (
+        <Route
+            {...rest}
+            render={({ location }) =>
+                fakeAuth.isAuthenticated ? (
+                    children
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: { from: location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+}
+
+function PublicPage() {
+    return <h3>Store Page</h3>;
+}
+
+function ProtectedPage() {
+    return <h3>Dashboard Page</h3>;
+}
+
+function LoginPage() {
+    let history = useHistory();
+    let location = useLocation();
+
+    let { from } = location.state || { from: { pathname: "/" } };
+    let login = () => {
+        fakeAuth.authenticate(() => {
+            history.replace(from);
         });
     };
 
-    handleWhichMessage = () => {
-        this.setState({ whichMessage: false });
-    };
-
-    render() {
-        if (this.state.isLoggedIn) {
-            return <Redirect to='/renderWindow' />;
-        }
-
-        return (
-            <div>
-                <Nav className='nav_bar' handleAllNav={this.handleAllNav} />
-                <Router>
-                    <div className='home_link'>
-                        <Link
-                            className='link_text'
-                            to='/login'
-                            onClick={this.handleWhichMessage}>
-                            {this.state.whichMessage
-                                ? "Welcome, click to login"
-                                : "Please enter your credentials below"}
-                        </Link>
-                    </div>
-
-                    <Switch>
-                        <Route path='/login'>
-                            <LoginWindow handleLoggedIn={this.handleLoggedIn} />
-                        </Route>
-                        <Route path='/renderWindow'>
-                            <RenderWindow />
-                        </Route>
-                    </Switch>
-                </Router>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <p>You must log in to view the page at {from.pathname}</p>
+            <button onClick={login}>Log in</button>
+        </div>
+    );
 }
-
-export default App;
