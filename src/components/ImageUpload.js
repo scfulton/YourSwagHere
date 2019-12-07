@@ -1,7 +1,8 @@
 import React from "react";
-import atob from "atob";
 import FileBase from "react-file-base64";
 import DefaultImage from "./default-img.jpg";
+// import imageProcess from "../images/imagerocess";
+// const imageProcess = require("../imaging/imagerocess");
 
 class ImageUpload extends React.Component {
     constructor(props) {
@@ -17,6 +18,7 @@ class ImageUpload extends React.Component {
     }
 
     getFiles(files) {
+        // const nFiles = imageProcess(files);
         this.setState({ files: files, unEncFile: files });
     }
 
@@ -50,7 +52,7 @@ class ImageUpload extends React.Component {
             <form onSubmit={this.handleUploadImage}>
                 <div>
                     <FileBase
-                        type="file"
+                        type='file'
                         multiple={false}
                         onDone={this.getFiles.bind(this)}
                     />
@@ -58,15 +60,15 @@ class ImageUpload extends React.Component {
                         ref={ref => {
                             this.fileName = ref;
                         }}
-                        type="text"
-                        placeholder="Enter Company name"
+                        type='text'
+                        placeholder='Enter Company name'
                     />
                 </div>
                 <br />
                 <div>
                     <button>Upload</button>
                 </div>
-                <img src={this.state.imageURL} alt="img" />
+                <img src={this.state.imageURL} alt='img' />
             </form>
         );
     }

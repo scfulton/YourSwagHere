@@ -1,9 +1,9 @@
 .nav_bar {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     min-height: 10vh;
-    background: rgba(128, 56, 31, 0.938);
+    background: rgb(243, 114, 70);
     color: rgb(241, 229, 229);
 }
 
@@ -13,4 +13,9 @@
     justify-content: space-around;
     align-content: center;
     list-style: none;
+    color: whitesmoke;
+}
+
+.link_text {
+    color: whitesmoke;
 }
