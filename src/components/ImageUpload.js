@@ -43,7 +43,7 @@ class ImageUpload extends React.Component {
         }).then(
             setTimeout(() => {
                 this.afterUpload();
-            }, 3000)
+            }, 4000)
         );
         // .then(setTimeout(10000))
         // .then(this.afterUpload());
@@ -71,15 +71,15 @@ class ImageUpload extends React.Component {
         // });
     }
 
-    async afterUpload() {
+    afterUpload() {
         // ev.preventDefault();
         let queryString =
             "https://your-swag-here.herokuapp.com/image/findOne/" +
-            this.fileName.value;
+            this.state.cName;
         // await setTimeout(console.log(this.fileName.value), 8000)
         // console.log(this.fileName.value);
 
-        await fetch(
+        fetch(
             queryString,
             {
                 method: "GET",
