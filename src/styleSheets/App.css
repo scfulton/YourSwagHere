@@ -1,22 +1,16 @@
-.App {
-  text-align: center;
+.home_link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    background: rgba(236, 115, 70, 0.938);
+    color: whitesmoke;
 }
 
-.App-logo {
-  height: 40vmin;
+.main_background {
+    background-image: url("bgImage.jpeg");
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
+.link_text {
+    color: white;
 }

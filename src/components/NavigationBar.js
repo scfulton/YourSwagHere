@@ -1,35 +1,135 @@
-import React from 'react'
+import React from "react";
+import Dashboard from "./Dashboard";
+import "../styleSheets/NavigationBar.css";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+    useHistory,
+    useLocation
+} from "react-router-dom";
 
-return (
-    <Router>
-      <div>
-        <nav>
-          <ul className="nav_bar">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav>
+function NavigationBar(props) {
+    return (
+        <Router>
+            <div>
+                <nav className="nav_bar">
+                    <h3>
+                        <img
+                            className="App-logo"
+                            src="logoImg2.png"
+                            alt="logo here"
+                        />
+                    </h3>
+                    <ul className="nav_links">
+                        <li>
+                            <Link to="/store" className="link_text">
+                                Store
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/protected" className="link_text">
+                                Dashboard
+                            </Link>
+                        </li>
+                        <li>
+                            <AuthButton className="link_text" />
+                        </li>
+                    </ul>
+                </nav>
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
+                <Switch>
+                    <Route path="/store">
+                        <PublicPage />
+                    </Route>
+                    <Route path="/login">
+                        {/* <LoginWindow /> */}
+                        <LoginPage />
+                    </Route>
+                    <PrivateRoute path="/protected">
+                        <Dashboard />
+                    </PrivateRoute>
+                </Switch>
+            </div>
+        </Router>
+    );
+}
+
+function AuthButton() {
+    let history = useHistory();
+
+    return fakeAuth.isAuthenticated ? (
+        <div>
+            Welcome!
+            <button
+                onClick={() => {
+                    fakeAuth.signout(() => history.push("/"));
+                }}>
+                Sign out
+            </button>
+        </div>
+    ) : (
+        <div>You are not logged in.</div>
+    );
+}
+
+const fakeAuth = {
+    isAuthenticated: false,
+    authenticate(cb) {
+        fakeAuth.isAuthenticated = true;
+        setTimeout(cb, 100); // fake async
+    },
+    signout(cb) {
+        fakeAuth.isAuthenticated = false;
+        setTimeout(cb, 100);
+    }
+};
+
+function LoginPage() {
+    let history = useHistory();
+    let location = useLocation();
+
+    let { from } = location.state || { from: { pathname: "/" } };
+    let login = () => {
+        fakeAuth.authenticate(() => {
+            history.replace(from);
+        });
+    };
+
+    return (
+        <div>
+            <p>You must log in to view the dashboard.</p>
+            <button onClick={login}>Log in</button>
+        </div>
+    );
+}
+
+// A wrapper for <Route> that redirects to the login
+// screen if you're not yet authenticated.
+function PrivateRoute({ children, ...rest }) {
+    return (
+        <Route
+            {...rest}
+            render={({ location }) =>
+                fakeAuth.isAuthenticated ? (
+                    children
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: { from: location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+}
+
+function PublicPage() {
+    return <h3>Store Page</h3>;
+}
+
+export default NavigationBar;

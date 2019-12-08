@@ -1,13 +1,16 @@
-import React from 'react';
-// import RenderWindow from './components/RenderWindow';
-
+import React from "react";
+import ImageUpload from "./ImageUpload";
+// import UpLoadWindow from "./UploadWindow";
 
 function Dashboard() {
-  return (
-    <div >
-      This is a Dashboard
-    </div>
-  );
+    return (
+        <div>
+            This is the Dashboard
+            <br />
+            <br />
+            <ImageUpload />
+        </div>
+    );
 }
 
 export default Dashboard;

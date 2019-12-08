@@ -1,0 +1,9 @@
+body {
+    background-color: rgb(219, 255, 250);
+    /* background-image: url("techBG.jpg"); */
+    background-image: url("techBG3.jpg");
+    /* background-position: center; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* opacity: 0.5; */
+}
