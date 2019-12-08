@@ -29,8 +29,10 @@ class ImageUpload extends React.Component {
 
     handleUploadImage(ev) {
         ev.preventDefault();
+
         // https://your-swag-here.herokuapp.com/
-        fetch("https://your-swag-here.herokuapp.com/image/uploadbase/", {
+        // fetch("https://your-swag-here.herokuapp.com/image/uploadbase/", {
+        fetch("http://localhost:3003/image/uploadbase/", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -43,8 +45,29 @@ class ImageUpload extends React.Component {
         }).then(
             setTimeout(() => {
                 this.afterUpload();
-            }, 4000)
+            }, 3000)
         );
+        // // promise.all version
+        // async handleUploadImage(ev) {
+        //     ev.preventDefault();
+        //     await Promise.all([
+        //         // https://your-swag-here.herokuapp.com/
+        //         // fetch("https://your-swag-here.herokuapp.com/image/uploadbase/", {
+        //         fetch("http://localhost:3003/image/uploadbase/", {
+        //             method: "POST",
+        //             headers: {
+        //                 Accept: "application/json",
+        //                 "Content-Type": "application/json"
+        //             },
+        //             body: JSON.stringify({
+        //                 companyName: this.fileName.value,
+        //                 imageBase64: this.state.files.base64.toString()
+        //             })
+        //         }),
+        //         setTimeout(() => {
+        //             this.afterUpload();
+        //         }, 5000)
+        //     ]);
         // .then(setTimeout(10000))
         // .then(this.afterUpload());
 
@@ -70,12 +93,15 @@ class ImageUpload extends React.Component {
         //         });
         // });
     }
-
     afterUpload() {
         // ev.preventDefault();
+
         let queryString =
-            "https://your-swag-here.herokuapp.com/image/findOne/" +
+            "http://localhost:3003/image/findOne/" +
+            // "https://your-swag-here.herokuapp.com/image/findOne/" +
             this.fileName.value;
+        // console.log("query str: " + queryString);
+
         // await setTimeout(console.log(this.fileName.value), 8000)
         // console.log(this.fileName.value);
 
@@ -87,21 +113,64 @@ class ImageUpload extends React.Component {
                     Accept: "application/json",
                     "Content-Type": "application/json"
                 }
-            },
-            console.log("in fetch")
+            }
+            // console.log("in fetch")
         )
             .then(response => {
+                // console.log(typeof response);
                 return response.json();
-            }, console.log("in then resp"))
+            })
+
             .then(body => {
                 // console.log(body[0].imageBase64.toString());
 
                 this.setState({
-                    // imageURL: atob(this.state.unEncFile)
-                    imageURL: body[0].imageBase64.toString()
+                    // imageURL: body.toString()
+                    imageURL: body.imageBase64.toString()
                 });
-            }, console.log("in then body"));
+                // console.log("in then body");
+            });
     }
+
+    // //Promise.all version
+    // async afterUpload() {
+    //     // ev.preventDefault();
+
+    //     let queryString =
+    //         "http://localhost:3003/image/findOne/" +
+    //         // "https://your-swag-here.herokuapp.com/image/findOne/" +
+    //         this.fileName.value;
+    //     console.log("query str: " + queryString);
+
+    //     // await setTimeout(console.log(this.fileName.value), 8000)
+    //     // console.log(this.fileName.value);
+    //     await Promise.all([
+    //         fetch(
+    //             queryString,
+    //             {
+    //                 method: "GET",
+    //                 headers: {
+    //                     Accept: "application/json",
+    //                     "Content-Type": "application/json"
+    //                 }
+    //             },
+    //             console.log("in fetch")
+    //         ),
+    //         response => {
+    //             console.log("in then resp");
+    //             return response.json();
+    //         },
+    //         body => {
+    //             // console.log(body[0].imageBase64.toString());
+
+    //             this.setState({
+    //                 // imageURL: atob(this.state.unEncFile)
+    //                 imageURL: body[0].imageBase64.toString()
+    //             });
+    //             console.log("in then body");
+    //         }
+    //     ]);
+    // }
 
     render() {
         return (
