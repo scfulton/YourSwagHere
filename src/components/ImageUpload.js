@@ -11,7 +11,7 @@ class ImageUpload extends React.Component {
         this.state = {
             imageURL: DefaultImage,
             files: [],
-            unEncFile: ""
+            cName: ""
         };
 
         this.handleUploadImage = this.handleUploadImage.bind(this);
@@ -21,7 +21,10 @@ class ImageUpload extends React.Component {
     getFiles(files) {
         // const nFiles = imageProcess(files);
 
-        this.setState({ files: files, unEncFile: files });
+        this.setState({
+            files: files,
+            cName: this.fileName.value
+        });
     }
 
     handleUploadImage(ev) {
