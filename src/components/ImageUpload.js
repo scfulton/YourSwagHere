@@ -26,7 +26,8 @@ class ImageUpload extends React.Component {
 
     handleUploadImage(ev) {
         ev.preventDefault();
-        fetch("http://localhost:3003/image/uploadbase/", {
+        // https://your-swag-here.herokuapp.com/
+        fetch("https://your-swag-here.herokuapp.com/image/uploadbase/", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -70,7 +71,8 @@ class ImageUpload extends React.Component {
     async afterUpload() {
         // ev.preventDefault();
         let queryString =
-            "http://localhost:3003/image/findOne/" + this.fileName.value;
+            "https://your-swag-here.herokuapp.com/image/findOne/" +
+            this.fileName.value;
         // await setTimeout(console.log(this.fileName.value), 8000)
         // console.log(this.fileName.value);
 
