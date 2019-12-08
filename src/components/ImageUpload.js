@@ -27,12 +27,12 @@ class ImageUpload extends React.Component {
         });
     }
 
-    handleUploadImage(ev) {
+    async handleUploadImage(ev) {
         ev.preventDefault();
 
         // https://your-swag-here.herokuapp.com/
-        fetch("https://your-swag-here.herokuapp.com/image/uploadbase/", {
-            // fetch("http://localhost:3003/image/uploadbase/", {
+        // fetch("https://your-swag-here.herokuapp.com/image/uploadbase/", {
+        await fetch("http://localhost:3003/image/uploadbase/", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -45,7 +45,7 @@ class ImageUpload extends React.Component {
         }).then(
             setTimeout(() => {
                 this.afterUpload();
-            }, 3000)
+            }, 5000)
         );
         // // promise.all version
         // async handleUploadImage(ev) {
@@ -93,19 +93,19 @@ class ImageUpload extends React.Component {
         //         });
         // });
     }
-    afterUpload() {
+    async afterUpload() {
         // ev.preventDefault();
 
         let queryString =
-            // "http://localhost:3003/image/findOne/" +
-            "https://your-swag-here.herokuapp.com/image/findOne/" +
+            "http://localhost:3003/image/findOne/" +
+            // "https://your-swag-here.herokuapp.com/image/findOne/" +
             this.fileName.value;
         // console.log("query str: " + queryString);
 
         // await setTimeout(console.log(this.fileName.value), 8000)
         // console.log(this.fileName.value);
 
-        fetch(
+        await fetch(
             queryString,
             {
                 method: "GET",
