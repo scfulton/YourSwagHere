@@ -15,10 +15,12 @@ class ImageUpload extends React.Component {
         };
 
         this.handleUploadImage = this.handleUploadImage.bind(this);
+        this.afterUpload = this.afterUpload.bind(this);
     }
 
     getFiles(files) {
         // const nFiles = imageProcess(files);
+
         this.setState({ files: files, unEncFile: files });
     }
 
@@ -34,17 +36,66 @@ class ImageUpload extends React.Component {
                 companyName: this.fileName.value,
                 imageBase64: this.state.files.base64.toString()
             })
-        }).then(response => {
-            response.json().then(body => {
-                this.setState(
-                    {
-                        // imageURL: atob(this.state.unEncFile)
-                        imageURL: this.state.files.base64.toString("base64")
-                    },
-                    console.log()
-                );
-            });
-        });
+        }).then(
+            setTimeout(() => {
+                this.afterUpload();
+            }, 3000)
+        );
+        // .then(setTimeout(10000))
+        // .then(this.afterUpload());
+
+        // .then(response => {
+        //     setTimeout(3000);
+        //     let queryString =
+        //         "http://localhost:3003/image/findOne/" + this.fileName.value;
+        //     fetch(queryString, {
+        //         method: "GET",
+        //         headers: {
+        //             Accept: "application/json",
+        //             "Content-Type": "application/json"
+        //         }
+        //     })
+        //         .then(response => {
+        //             return response.json();
+        //         })
+        //         .then(body => {
+        //             this.setState({
+        //                 // imageURL: atob(this.state.unEncFile)
+        //                 imageURL: body.base64.toString("base64")
+        //             });
+        //         });
+        // });
+    }
+
+    async afterUpload() {
+        // ev.preventDefault();
+        let queryString =
+            "http://localhost:3003/image/findOne/" + this.fileName.value;
+        // await setTimeout(console.log(this.fileName.value), 8000)
+        // console.log(this.fileName.value);
+
+        await fetch(
+            queryString,
+            {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
+            },
+            console.log("in fetch")
+        )
+            .then(response => {
+                return response.json();
+            }, console.log("in then resp"))
+            .then(body => {
+                // console.log(body[0].imageBase64.toString());
+
+                this.setState({
+                    // imageURL: atob(this.state.unEncFile)
+                    imageURL: body[0].imageBase64.toString()
+                });
+            }, console.log("in then body"));
     }
 
     render() {
@@ -52,7 +103,7 @@ class ImageUpload extends React.Component {
             <form onSubmit={this.handleUploadImage}>
                 <div>
                     <FileBase
-                        type='file'
+                        type="file"
                         multiple={false}
                         onDone={this.getFiles.bind(this)}
                     />
@@ -60,15 +111,15 @@ class ImageUpload extends React.Component {
                         ref={ref => {
                             this.fileName = ref;
                         }}
-                        type='text'
-                        placeholder='Enter Company name'
+                        type="text"
+                        placeholder="Enter Company name"
                     />
                 </div>
                 <br />
                 <div>
                     <button>Upload</button>
                 </div>
-                <img src={this.state.imageURL} alt='img' />
+                <img src={this.state.imageURL} alt="img" />
             </form>
         );
     }

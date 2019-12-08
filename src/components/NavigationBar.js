@@ -15,36 +15,40 @@ function NavigationBar(props) {
     return (
         <Router>
             <div>
-                <nav className='nav_bar'>
+                <nav className="nav_bar">
                     <h3>
-                        <img src='logoImg.png' alt='logo here' />
+                        <img
+                            className="App-logo"
+                            src="logoImg2.png"
+                            alt="logo here"
+                        />
                     </h3>
-                    <ul className='nav_links'>
+                    <ul className="nav_links">
                         <li>
-                            <Link to='/store' className='link_text'>
+                            <Link to="/store" className="link_text">
                                 Store
                             </Link>
                         </li>
                         <li>
-                            <Link to='/protected' className='link_text'>
+                            <Link to="/protected" className="link_text">
                                 Dashboard
                             </Link>
                         </li>
                         <li>
-                            <AuthButton className='link_text' />
+                            <AuthButton className="link_text" />
                         </li>
                     </ul>
                 </nav>
 
                 <Switch>
-                    <Route path='/store'>
+                    <Route path="/store">
                         <PublicPage />
                     </Route>
-                    <Route path='/login'>
+                    <Route path="/login">
                         {/* <LoginWindow /> */}
                         <LoginPage />
                     </Route>
-                    <PrivateRoute path='/protected'>
+                    <PrivateRoute path="/protected">
                         <Dashboard />
                     </PrivateRoute>
                 </Switch>

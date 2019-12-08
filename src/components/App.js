@@ -2,9 +2,9 @@ import React from "react";
 import NavBar from "../components/NavigationBar";
 import "../styleSheets/NavigationBar.css";
 
-export default function AuthExample() {
+export default function App() {
     return (
-        <div className='Body'>
+        <div className="Body">
             <NavBar />
         </div>
     );
