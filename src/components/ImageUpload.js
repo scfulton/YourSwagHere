@@ -75,7 +75,7 @@ class ImageUpload extends React.Component {
         // ev.preventDefault();
         let queryString =
             "https://your-swag-here.herokuapp.com/image/findOne/" +
-            this.state.cName;
+            this.fileName.value;
         // await setTimeout(console.log(this.fileName.value), 8000)
         // console.log(this.fileName.value);
 
