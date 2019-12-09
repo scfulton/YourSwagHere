@@ -1,0 +1,11 @@
+.List_Image {
+    float: left;
+    height: 3rem;
+    width: 3rem;
+}
+
+.Store_Card {
+    max-width: 30%;
+    height: auto;
+    border-style: ridge;
+}
