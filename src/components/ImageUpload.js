@@ -31,7 +31,7 @@ class ImageUpload extends React.Component {
         ev.preventDefault();
 
         // https://your-swag-here.herokuapp.com/
-        fetch("https://your-swag-here.herokuapp.com/image/uploadbase/", {
+        fetch("http://your-swag-here.herokuapp.com/image/uploadbase/", {
             // await fetch("http://localhost:3003/image/uploadbase/", {
             method: "POST",
             headers: {
@@ -98,7 +98,7 @@ class ImageUpload extends React.Component {
 
         let queryString =
             // "http://localhost:3003/image/findOne/" +
-            "https://your-swag-here.herokuapp.com/image/findOne/" +
+            "http://your-swag-here.herokuapp.com/image/findOne/" +
             this.fileName.value;
         // console.log("query str: " + queryString);
 
