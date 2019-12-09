@@ -45,7 +45,7 @@ class ImageUpload extends React.Component {
         }).then(
             setTimeout(() => {
                 this.afterUpload();
-            }, 5000)
+            }, 8000)
         );
         // // promise.all version
         // async handleUploadImage(ev) {
