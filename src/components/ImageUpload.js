@@ -77,14 +77,21 @@ class ImageUpload extends React.Component {
             })
 
             .then(body => {
-                // console.log(body[0].imageBase64.toString());
-
+                // this.props.isRectangleUploaded(body.isSquare);
+                console.log("body.isSquare: ", body.isSquare);
                 this.setState({
                     // imageURL: body.toString()
                     imageURL: body.imageBase64.toString()
                 });
+                // console.log("height: ", heightNum);
+
+                this.props.afterImgUpload(body.imageBase64.toString());
                 // console.log("in then body");
             });
+    }
+
+    componentDidMount() {
+        this.setState({ imageURL: DefaultImage });
     }
 
     render() {
@@ -108,7 +115,7 @@ class ImageUpload extends React.Component {
                 <div>
                     <button>Upload</button>
                 </div>
-                <img src={this.state.imageURL} alt='img' />
+                <img id='imgRender' src={this.state.imageURL} alt='img' />
             </form>
         );
     }

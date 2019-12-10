@@ -1,3 +1,11 @@
+* {
+    box-sizing: border-box;
+}
+
+.body {
+    font-family: Arial;
+    margin: 0;
+}
 .home_link {
     display: flex;
     justify-content: center;
@@ -13,4 +21,11 @@
 
 .link_text {
     color: white;
+}
+
+@media screen and (max-width: 700px) {
+    .row,
+    .navbar {
+        flex-direction: column;
+    }
 }

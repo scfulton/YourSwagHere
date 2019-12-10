@@ -1,12 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+.body {
+    font-family: Arial;
+    margin: 0;
+}
+
 .nav_bar {
     display: flex;
+    background: rgb(15, 177, 199);
+    padding: 0;
+    margin: 0;
+}
+.nav_bar a {
+    padding: 0;
+    margin: 0;
+    /* display: flex; */
     justify-content: space-around;
     align-items: center;
+    text-align: center;
     min-height: 10vh;
-    background: rgb(243, 114, 70);
+    padding: 16px;
+    /* background: rgb(243, 114, 70); */
     color: rgb(241, 229, 229);
 }
 
+.nav_bar a:hover {
+    background-color: rgb(11, 214, 241);
+    color: rgb(253, 253, 253);
+    border-radius: 10%;
+}
+.side {
+    flex: 30%;
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    background: rgb(243, 114, 70);
+}
 .nav_links {
     /* font-size: 1.75em; */
     font-size: 100%;
@@ -17,9 +51,18 @@
     list-style: none;
     color: whitesmoke;
 }
+.header {
+    background: rgb(255, 121, 76);
+    /* height: 10em; */
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
 
 .link_text {
     color: whitesmoke;
+    transition: 0.3s;
 }
 
 .App-logo {
@@ -27,6 +70,9 @@
     height: 80px;
     border: 2px solid rgb(18, 212, 238);
     border-radius: 50%;
+}
+.login_text {
+    float: right;
 }
 
 @keyframes App-logo-spin {
@@ -36,4 +82,13 @@
     to {
         transform: rotate(360deg);
     }
+}
+@media screen and (max-width: 700px) {
+    .row,
+    .navbar {
+        flex-direction: column;
+    }
+}
+.logo_box {
+    padding-left: 2.3em;
 }

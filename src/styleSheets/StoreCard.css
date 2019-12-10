@@ -5,7 +5,58 @@
 }
 
 .Store_Card {
-    max-width: 30%;
-    height: auto;
-    border-style: ridge;
+    /* position: relative; */
+    display: block;
+    float: left;
+    max-width: 33%;
+    height: 100%;
+    /* border-style: ridge; */
+    padding: 10px;
+}
+
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.col {
+    flex: 1; /* additionally, equal width */
+
+    /* padding: 1em; */
+    border: solid;
+    height: 20em;
+}
+
+.logo_col {
+    flex: 1; /* additionally, equal width */
+    padding-left: 5em;
+    padding-top: 4em;
+    height: 10em;
+}
+
+.item_z1_img {
+    position: relative;
+    z-index: 1;
+}
+
+.logoSqr_z2_img {
+    size: 2em;
+    width: 300px;
+    height: 100px;
+    position: relative;
+    top: -324px;
+    /* left: px; */
+    z-index: 2;
+}
+
+.logoRec_z2_img {
+    size: 2em;
+    width: 300px;
+    height: 100px;
+    position: relative;
+    top: -330px;
+    left: -33px;
+    z-index: 2;
 }

@@ -11,19 +11,22 @@ import {
     useHistory,
     useLocation
 } from "react-router-dom";
-
 function NavigationBar(props) {
     return (
         <Router>
             <div>
+                <div className='header'>
+                    <h1>
+                        <div className='logo_box'>
+                            <img
+                                className='App-logo'
+                                src='logoImg2.png'
+                                alt='logo here'
+                            />
+                        </div>
+                    </h1>
+                </div>
                 <nav className='nav_bar'>
-                    <h3>
-                        <img
-                            className='App-logo'
-                            src='logoImg2.png'
-                            alt='logo here'
-                        />
-                    </h3>
                     <ul className='nav_links'>
                         <li>
                             <Link to='/store' className='link_text'>
@@ -36,22 +39,36 @@ function NavigationBar(props) {
                             </Link>
                         </li>
                         <li>
-                            <AuthButton className='link_text' />
+                            <AuthButton
+                                className='link_text'
+                                className='login_text'
+                                afterIsAuthed={props.afterIsAuthed}
+                                // afterSignOut={props.afterSignOut}
+                            />
                         </li>
                     </ul>
                 </nav>
 
                 <Switch>
                     <Route path='/store'>
-                        <StorePage />
+                        <StorePage
+                            isAuthed={props.isAuthed}
+                            logo={props.logo}
+                            isRectangleUploaded={props.isRectangleUploaded}
+                            isRectrangle={props.isRectrangle}
+                        />
                         {/* <PublicPage /> */}
                     </Route>
                     <Route path='/login'>
                         {/* <LoginWindow /> */}
-                        <LoginPage />
+                        <LoginPage afterIsAuthed={props.afterIsAuthed} />
                     </Route>
                     <PrivateRoute path='/loadImage'>
-                        <Dashboard />
+                        <Dashboard
+                            isRectangleUploaded={props.isRectangleUploaded}
+                            isRectangle={props.isRectangle}
+                            afterImgUpload={props.afterImgUpload}
+                        />
                     </PrivateRoute>
                 </Switch>
             </div>
@@ -59,7 +76,7 @@ function NavigationBar(props) {
     );
 }
 
-function AuthButton() {
+function AuthButton(props) {
     let history = useHistory();
 
     return fakeAuth.isAuthenticated ? (
@@ -67,7 +84,7 @@ function AuthButton() {
             Welcome!
             <button
                 onClick={() => {
-                    fakeAuth.signout(() => history.push("/"));
+                    fakeAuth.signout(props, () => history.push("/"));
                 }}>
                 Sign out
             </button>
@@ -79,23 +96,26 @@ function AuthButton() {
 
 const fakeAuth = {
     isAuthenticated: false,
-    authenticate(cb) {
+    authenticate(props, cb) {
         fakeAuth.isAuthenticated = true;
+        props.afterIsAuthed(true);
         setTimeout(cb, 100); // fake async
     },
-    signout(cb) {
+    signout(props, cb) {
         fakeAuth.isAuthenticated = false;
+        props.afterIsAuthed(false);
+        // props.afterSignOut(true);
         setTimeout(cb, 100);
     }
 };
 
-function LoginPage() {
+function LoginPage(props) {
     let history = useHistory();
     let location = useLocation();
 
     let { from } = location.state || { from: { pathname: "/" } };
     let login = () => {
-        fakeAuth.authenticate(() => {
+        fakeAuth.authenticate(props, () => {
             history.replace(from);
         });
     };
@@ -130,8 +150,8 @@ function PrivateRoute({ children, ...rest }) {
     );
 }
 
-function PublicPage() {
-    return <h3>Store Page</h3>;
-}
+// function PublicPage() {
+//     return <h3>Store Page</h3>;
+// }
 
 export default NavigationBar;
