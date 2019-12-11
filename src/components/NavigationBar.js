@@ -2,6 +2,7 @@ import React from "react";
 import Dashboard from "./Dashboard";
 import StorePage from "./StorePage";
 import "../styleSheets/NavigationBar.css";
+import KLoggins from "./Login";
 import {
     BrowserRouter as Router,
     Switch,
@@ -15,33 +16,33 @@ function NavigationBar(props) {
     return (
         <Router>
             <div>
-                <div className='header'>
-                    <h1>
-                        <div className='logo_box'>
-                            <img
-                                className='App-logo'
-                                src='logoImg2.png'
-                                alt='logo here'
-                            />
-                        </div>
-                    </h1>
-                </div>
-                <nav className='nav_bar'>
-                    <ul className='nav_links'>
-                        <li>
-                            <Link to='/store' className='link_text'>
+                {/* <div className=""> */}
+                <h1 className="header">
+                    <div className="logo_box">
+                        <img
+                            className="App-logo"
+                            src="logoImg2.png"
+                            alt="logo here"
+                        />
+                    </div>
+                    <div className="headerTitle">Your SWAG Here</div>
+                </h1>
+                {/* </div> */}
+                <nav className="nav_bar">
+                    <ul className="nav_links">
+                        <li className="ListChild">
+                            <Link to="/store" className="link_text">
                                 Store
                             </Link>
                         </li>
-                        <li>
-                            <Link to='/loadImage' className='link_text'>
+                        <li className="ListChild">
+                            <Link to="/loadImage" className="link_text">
                                 LoadImage
                             </Link>
                         </li>
-                        <li>
+                        <li className="loggedIn">
                             <AuthButton
-                                className='link_text'
-                                className='login_text'
+                                className="login_text"
                                 afterIsAuthed={props.afterIsAuthed}
                                 // afterSignOut={props.afterSignOut}
                             />
@@ -50,7 +51,7 @@ function NavigationBar(props) {
                 </nav>
 
                 <Switch>
-                    <Route path='/store'>
+                    <Route path="/store">
                         <StorePage
                             isAuthed={props.isAuthed}
                             logo={props.logo}
@@ -59,11 +60,11 @@ function NavigationBar(props) {
                         />
                         {/* <PublicPage /> */}
                     </Route>
-                    <Route path='/login'>
+                    <Route path="/login">
                         {/* <LoginWindow /> */}
                         <LoginPage afterIsAuthed={props.afterIsAuthed} />
                     </Route>
-                    <PrivateRoute path='/loadImage'>
+                    <PrivateRoute path="/loadImage">
                         <Dashboard
                             isRectangleUploaded={props.isRectangleUploaded}
                             isRectangle={props.isRectangle}
@@ -80,9 +81,10 @@ function AuthButton(props) {
     let history = useHistory();
 
     return fakeAuth.isAuthenticated ? (
-        <div>
-            Welcome!
+        <div className="welcomeBox">
+            <div>Welcome!</div>
             <button
+                className="button"
                 onClick={() => {
                     fakeAuth.signout(props, () => history.push("/"));
                 }}>
@@ -121,9 +123,12 @@ function LoginPage(props) {
     };
 
     return (
-        <div>
+        <div className="LoginButtonThings">
+            <br />
             <p>You must log in to view the dashboard.</p>
-            <button onClick={login}>Log in</button>
+            <button className="button" onClick={login}>
+                Log in
+            </button>
         </div>
     );
 }
@@ -149,9 +154,5 @@ function PrivateRoute({ children, ...rest }) {
         />
     );
 }
-
-// function PublicPage() {
-//     return <h3>Store Page</h3>;
-// }
 
 export default NavigationBar;

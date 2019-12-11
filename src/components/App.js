@@ -3,6 +3,7 @@ import NavBar from "../components/NavigationBar";
 import "../styleSheets/NavigationBar.css";
 import "../styleSheets/App.css";
 import dfalt_logo from "../components/dfalt_logo.png";
+import tplogo from "../shopImages/Talent-Path.png";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -36,7 +37,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div className='body'>
+            <div className="body">
                 <NavBar
                     afterImgUpload={this.afterImgUpload}
                     afterIsAuthed={this.afterIsAuthed}
@@ -44,6 +45,11 @@ export default class App extends React.Component {
                     isRectangle={this.state.isRectangle}
                     logo={this.state.logo}
                 />
+
+                <footer className="footer">
+                    Created By Scotty Fulton at
+                    <img className="tplogo" src={tplogo} alt="tplogo" />
+                </footer>
             </div>
         );
     }

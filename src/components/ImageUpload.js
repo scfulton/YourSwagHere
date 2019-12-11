@@ -1,6 +1,7 @@
 import React from "react";
 import FileBase from "react-file-base64";
 import DefaultImage from "./default-img.jpg";
+import "../styleSheets/Image_upload.css";
 // import imageProcess from "../images/imagerocess";
 // const imageProcess = require("../imaging/imagerocess");
 
@@ -29,24 +30,29 @@ class ImageUpload extends React.Component {
 
     async handleUploadImage(ev) {
         ev.preventDefault();
-
-        // https://your-swag-here.herokuapp.com/
-        // fetch("https://your-swag-here.herokuapp.com/image/uploadbase/", {
-        await fetch("http://localhost:3003/image/uploadbase/", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                companyName: this.fileName.value,
-                imageBase64: this.state.files.base64.toString()
-            })
-        }).then(
-            setTimeout(() => {
-                this.afterUpload();
-            }, 8000)
-        );
+        if (this.state.files.length < 1 || this.state.cName === "") {
+            alert(
+                "please select a file and enter company name before submitting again"
+            );
+        } else {
+            // https://your-swag-here.herokuapp.com/
+            // fetch("https://your-swag-here.herokuapp.com/image/uploadbase/", {
+            await fetch("http://localhost:3003/image/uploadbase/", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    companyName: this.fileName.value,
+                    imageBase64: this.state.files.base64.toString()
+                })
+            }).then(
+                setTimeout(() => {
+                    this.afterUpload();
+                }, 8000)
+            );
+        }
     }
     async afterUpload() {
         // ev.preventDefault();
@@ -77,8 +83,8 @@ class ImageUpload extends React.Component {
             })
 
             .then(body => {
-                // this.props.isRectangleUploaded(body.isSquare);
-                console.log("body.isSquare: ", body.isSquare);
+                this.props.isRectangleUploaded(body.isSquare);
+                // console.log("body.isSquare: ", body.isSquare);
                 this.setState({
                     // imageURL: body.toString()
                     imageURL: body.imageBase64.toString()
@@ -96,26 +102,30 @@ class ImageUpload extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleUploadImage}>
+            <form className="form" onSubmit={this.handleUploadImage}>
                 <div>
                     <FileBase
-                        type='file'
+                        type="file"
                         multiple={false}
                         onDone={this.getFiles.bind(this)}
                     />
+                    <br />
+                    <br />
+
                     <input
+                        className="inputBox"
                         ref={ref => {
                             this.fileName = ref;
                         }}
-                        type='text'
-                        placeholder='Enter Company name'
+                        type="text"
+                        placeholder="Enter Company name"
                     />
                 </div>
                 <br />
                 <div>
-                    <button>Upload</button>
+                    <button className="button">Upload</button>
                 </div>
-                <img id='imgRender' src={this.state.imageURL} alt='img' />
+                <img id="imgRender" src={this.state.imageURL} alt="img" />
             </form>
         );
     }
