@@ -30,11 +30,8 @@ class ImageUpload extends React.Component {
 
     async handleUploadImage(ev) {
         ev.preventDefault();
-        if (this.state.files.length < 1 || this.state.cName === "") {
-            alert(
-                "please select a file and enter company name before submitting again"
-            );
-        } else {
+
+        try {
             // https://your-swag-here.herokuapp.com/
             // fetch("https://your-swag-here.herokuapp.com/image/uploadbase/", {
             await fetch("http://localhost:3003/image/uploadbase/", {
@@ -52,8 +49,15 @@ class ImageUpload extends React.Component {
                     this.afterUpload();
                 }, 8000)
             );
+        } catch (error) {
+            alert(
+                "ERROR ::: " +
+                    error +
+                    " ::: Please select an image file and enter company name"
+            );
         }
     }
+
     async afterUpload() {
         // ev.preventDefault();
 
